@@ -1,15 +1,23 @@
-// Первоначальный state
+import { createStore } from "redux"
+
 const initialState = 0
-// функция принимает state и действие которое нужно над ним выполнить
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'INC':
             return state + 1
-        // если получим незнакомое нам дейтвие - возвращаем state
         default:
             return state
     }
 }
-
-let state = reducer(initialState, {type: "INC"})
-console.log(state);
+// Store координирует работу с данными
+// чтобы созать store нужно иметь ф-цию Reducer
+const store = createStore(reducer)
+// метод subscribe позволяет получать нотификации об изменениях store
+store.subscribe(() => {
+    // вывод в консоль происходит после каждого вызова метода dispatch
+    console.log(store.getState());
+})
+// метод dispatch обрабатывает actions
+store.dispatch({type: 'INC'})
+store.dispatch({type: 'INC'})
