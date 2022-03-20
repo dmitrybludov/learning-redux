@@ -1,17 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// Первоначальный state
+const initialState = 0
+// функция принимает state и действие которое нужно над ним выполнить
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'INC':
+            return state + 1
+        // если получим незнакомое нам дейтвие - возвращаем state
+        default:
+            return state
+    }
+}
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+let state = reducer(initialState, {type: "INC"})
+console.log(state);
