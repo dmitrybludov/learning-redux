@@ -8,29 +8,41 @@ const reducer = (state = initialState, action) => {
             return state + 1
         case 'DEC':
             return state - 1
+        // исп.доп.параметрый из action
+        case 'RND':
+            return state + action.payload
         default:
             return state
     }
 }
 
 const store = createStore(reducer);
-// создание события и обработка action методом dispatch
+
 document
     .getElementById('inc')
     .addEventListener('click', () => {
         store.dispatch({type: 'INC'})
 })
-// создание события и обработка action методом dispatch
+
 document
     .getElementById('dec')
     .addEventListener('click', () => {
         store.dispatch({type: 'DEC'})
 })
-// перерисовка компонента
+// Так как reducer должен быть чистой функцией
+// вычисления производим в обработчике событьй
+// Кроме типа, любой action модет содержать доп.информацию (payload)
+document
+    .getElementById('rnd')
+    .addEventListener('click', () => {
+        const payload = Math.floor(Math.random() * 10)
+        store.dispatch({type: 'RND', payload})
+})
+
 const update = () => {
     document
         .getElementById('counter')
         .innerHTML = store.getState()
 }
-// подписка на изменение store
+
 store.subscribe(update)
