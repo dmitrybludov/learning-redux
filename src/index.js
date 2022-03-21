@@ -6,18 +6,31 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'INC':
             return state + 1
+        case 'DEC':
+            return state - 1
         default:
             return state
     }
 }
-// Store координирует работу с данными
-// чтобы созать store нужно иметь ф-цию Reducer
-const store = createStore(reducer)
-// метод subscribe позволяет получать нотификации об изменениях store
-store.subscribe(() => {
-    // вывод в консоль происходит после каждого вызова метода dispatch
-    console.log(store.getState());
+
+const store = createStore(reducer);
+// создание события и обработка action методом dispatch
+document
+    .getElementById('inc')
+    .addEventListener('click', () => {
+        store.dispatch({type: 'INC'})
 })
-// метод dispatch обрабатывает actions
-store.dispatch({type: 'INC'})
-store.dispatch({type: 'INC'})
+// создание события и обработка action методом dispatch
+document
+    .getElementById('dec')
+    .addEventListener('click', () => {
+        store.dispatch({type: 'DEC'})
+})
+// перерисовка компонента
+const update = () => {
+    document
+        .getElementById('counter')
+        .innerHTML = store.getState()
+}
+// подписка на изменение store
+store.subscribe(update)
