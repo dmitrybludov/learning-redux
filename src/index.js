@@ -1,31 +1,13 @@
 import { createStore } from "redux"
 
-const initialState = 0
-
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'INC':
-            return state + 1
-        case 'DEC':
-            return state - 1
-        // исп.доп.параметры из action
-        case 'RND':
-            return state + action.payload
-        default:
-            return state
-    }
-}
+import reducer from "./reducer";
+import { inc, dec, rnd } from './actions'
 
 const store = createStore(reducer);
-// Action Creator - функция которая создает объекты action
-const inc = () => ({type: "INC"})
-const dec = () => ({type: "DEC"})
-const rnd = (payload) => ({type: "RND", payload})
 
 document
     .getElementById('inc')
     .addEventListener('click', () => {
-        // использование action creator
         store.dispatch( inc() )
 })
 
