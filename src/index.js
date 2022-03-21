@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
             return state + 1
         case 'DEC':
             return state - 1
-        // исп.доп.параметрый из action
+        // исп.доп.параметры из action
         case 'RND':
             return state + action.payload
         default:
@@ -17,26 +17,29 @@ const reducer = (state = initialState, action) => {
 }
 
 const store = createStore(reducer);
+// Action Creator - функция которая создает объекты action
+const inc = () => ({type: "INC"})
+const dec = () => ({type: "DEC"})
+const rnd = (payload) => ({type: "RND", payload})
 
 document
     .getElementById('inc')
     .addEventListener('click', () => {
-        store.dispatch({type: 'INC'})
+        // использование action creator
+        store.dispatch( inc() )
 })
 
 document
     .getElementById('dec')
     .addEventListener('click', () => {
-        store.dispatch({type: 'DEC'})
+        store.dispatch( dec() )
 })
-// Так как reducer должен быть чистой функцией
-// вычисления производим в обработчике событьй
-// Кроме типа, любой action модет содержать доп.информацию (payload)
+
 document
     .getElementById('rnd')
     .addEventListener('click', () => {
         const payload = Math.floor(Math.random() * 10)
-        store.dispatch({type: 'RND', payload})
+        store.dispatch( rnd(payload) )
 })
 
 const update = () => {
