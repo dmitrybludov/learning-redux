@@ -1,5 +1,8 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+// import action creators
+import * as actions from '../../actions'
 
 const Counter = ({ counter, inc, dec, rnd }) => {
     return (
@@ -17,19 +20,25 @@ const Counter = ({ counter, inc, dec, rnd }) => {
         </div>
     )
 }
-// функция получает текущий state из redux store
-// её задача вернуть те значения props которые получит в результате counter
+
 const mapStateToProps = state => {
     return {
         counter: state
     }
 }
-// компонент высшего порядка
-// который передает значения из стор в компонент
-export default connect(mapStateToProps)(Counter)
-// функция connect создает внутри себя новый компонент который
-// оборачивает компонент counter
-// внутри этого компонента используя context api 
-// мы получаем доступ ко всему store
-// для того чтобы каким то образом получить значение из стор
-// и передать их в counter мы используем ф-цию mapStateToProps
+// второй аргумент для функции connect
+// функция аналогична mapStateToProps только работает с dispatch
+const mapDispatchToProps = dispatch => {
+    const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
+    return {
+        inc,
+        dec,
+        rnd: () => {
+            const randomValue = Math.floor(Math.random() * 10);
+            rnd(randomValue)
+        }
+    }
+}
+// Созданные функции будут переданы в компонент.
+// Таким способом компонент может обновить состояние в стор
+export default connect(mapStateToProps, mapDispatchToProps)(Counter)

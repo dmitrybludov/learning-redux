@@ -9,7 +9,6 @@ import reducer from "./reducer"
 const store = createStore(reducer);
 
 ReactDOM.render(
-    // Provider делает store доступным всему дереву компонентов (через контекст)
     <Provider store={store}>
         <App />
     </Provider>, 
