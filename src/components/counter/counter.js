@@ -26,19 +26,13 @@ const mapStateToProps = state => {
         counter: state
     }
 }
-// второй аргумент для функции connect
-// функция аналогична mapStateToProps только работает с dispatch
+
 const mapDispatchToProps = dispatch => {
-    const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
-    return {
-        inc,
-        dec,
-        rnd: () => {
-            const randomValue = Math.floor(Math.random() * 10);
-            rnd(randomValue)
-        }
-    }
+    // берем все action creators которые мы импортировали
+    // action creators связываются с функцией dispatch
+    // результирующие свойства присваиваются объекту
+    return bindActionCreators(actions, dispatch);
 }
-// Созданные функции будут переданы в компонент.
-// Таким способом компонент может обновить состояние в стор
+// если в connect вторым аргументом передать объект actions
+// то мы получим тот же результат
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)
